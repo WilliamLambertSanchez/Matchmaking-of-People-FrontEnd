@@ -21,6 +21,17 @@ export const Home = () => {
     getActivity();
   }, []);
   
+  // Formating de date
+const formatDate = (dateString) => {
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+  return formattedDate;
+};
 
   return (
     <>
@@ -28,18 +39,19 @@ export const Home = () => {
 
     <h3>*Integration of the map here*</h3>
 
-    <div>This is the list of activities : </div>
-      {activities.length > 0 ? (
-        activities.map(activity => (
-          <div key={activity._id}>
-            {activity.name}
-            {activity.description}
-            {activity.date}
-          </div>
-        ))
-      ) : (
-      <div>No activities found.</div>
-      )}     
+    <ul>
+        {activities.map((activity) => (
+          <li key={activity._id}>
+            <p>{`Name of activity : ${activity.name}`}</p>
+            <p>{`Description of activity : ${activity.description}`}</p>
+            <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
+            <button onClick={() => deleteActivity(activity._id)}>Delete</button>
+            <button onClick={() => updateMode(activity._id, activity.name, activity.description, activity.date)}>
+              Update
+            </button>
+          </li>
+        ))}
+      </ul>    
     </>
   )
 }
