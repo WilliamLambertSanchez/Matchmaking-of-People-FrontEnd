@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Link, Route, Routes, useParams } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
@@ -39,18 +39,18 @@ const App = () => {
   return (
       <>
         <BrowserRouter>
-            <nav>
-              {!token && <Link to="/register">Register</Link>}
+          <nav>
               {token && <Link to="/home">Home</Link>}
               {token && <Link to="/create">Create</Link>}
               {token && <Link to="/search">Search</Link>}
               {token && <Link to="/profile">Profile</Link>}
-              <Link to="/">Login</Link>
-              <Link to ="/logout">Logout</Link>
-            </nav>
+              {token && <Link to ="/logout">Logout</Link>}
+              {!token && <Link to="/">Login</Link>}
+              {!token && <Link to="/register">Register</Link>}
+          </nav>
 
-            <h1>Outward</h1>
-            <span>Meet new people</span>
+            <h1>Linker</h1>
+            <h2>Discover. Connect. Grow.</h2>
           
             <Routes>
               

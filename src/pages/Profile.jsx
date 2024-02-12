@@ -43,7 +43,7 @@ const formatDate = (dateString) => {
               <p>{`Username : ${user.username}`}</p>
               <p>{`Rank : ${user.rank}`}</p>
               <p>{`Activities joined : ${user.activitiesJoined}`}</p>
-              <p>{`Outwarder since : ${formatDate(user.createdAt)}`}</p>
+              <p>{`Member since : ${formatDate(user.createdAt)}`}</p>
             </li>
           ))
         ) : (

@@ -7,14 +7,16 @@ export const CreateActivityForm = ({
   description,
   setDescription,
   date,
-  setDate
+  setDate,
 }) => {
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isUpdating) {
       updateActivity();
     } else {
-      addActivity(name, description, date);
+      addActivity(name, description, date)
     }
   };
 
@@ -45,7 +47,7 @@ export const CreateActivityForm = ({
         <label>Date of the activity</label>
         <input
           className="date-input"
-          type="date"
+          type="datetime-local"
           placeholder="Date of the activity"
           value={date}
           onChange={(evt) => setDate(evt.target.value)}
@@ -53,7 +55,7 @@ export const CreateActivityForm = ({
           min="2024-01-30"
           max="2024-12-31"
           data-date=""
-          data-date-format="dd-mm-yyyy"
+          data-date-format="dd-mm-yyyy-HH:mm"
         />
       </div>
 

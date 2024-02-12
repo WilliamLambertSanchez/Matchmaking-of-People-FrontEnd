@@ -15,6 +15,7 @@ export const Create = ({token}) => {
   const [description, setDescription] = useState('')
   const [date, setDate] = useState('')
 
+  
   const getActivities = async () => {
     const responseFromBackend = await fetch(`${BASE_URL}/activities`)
     const activityResponse = await responseFromBackend.json();
@@ -25,7 +26,6 @@ export const Create = ({token}) => {
     await fetch(`${BASE_URL}/activities/${id}`, { method: 'DELETE' });
     toggle(!refresh);
   };
-
 
   const addActivity = async (name, description, date) => {
     await activityApi.createActivity(name, description, date, token);
@@ -75,15 +75,17 @@ export const Create = ({token}) => {
   };
 
 // Formating de date
-const formatDate = (dateString) => {
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-  const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
-  return formattedDate;
+  const formatDate = (dateString) => {
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    return formattedDate;
 };
 
 
@@ -107,6 +109,7 @@ const formatDate = (dateString) => {
             <p>{`Name of activity : ${activity.name}`}</p>
             <p>{`Description of activity : ${activity.description}`}</p>
             <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
+            <p>{`Author of activity : ${activity.username}`}</p>
             <button onClick={() => deleteActivity(activity._id)}>Delete</button>
             <button onClick={() => updateMode(activity._id, activity.name, activity.description, activity.date)}>
               Update

@@ -20,6 +20,10 @@ export const Home = () => {
   
     getActivity();
   }, []);
+
+  const joinActivity = () => {
+    
+  }
   
   // Formating de date
 const formatDate = (dateString) => {
@@ -45,10 +49,8 @@ const formatDate = (dateString) => {
             <p>{`Name of activity : ${activity.name}`}</p>
             <p>{`Description of activity : ${activity.description}`}</p>
             <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
-            <button onClick={() => deleteActivity(activity._id)}>Delete</button>
-            <button onClick={() => updateMode(activity._id, activity.name, activity.description, activity.date)}>
-              Update
-            </button>
+            <p>{`Author of activity : ${activity.username}`}</p>
+            <button onClick={() => joinActivity(activity._id)}>Join</button>
           </li>
         ))}
       </ul>    
