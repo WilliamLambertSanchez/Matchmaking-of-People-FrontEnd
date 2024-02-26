@@ -14,7 +14,7 @@ export const Login = ({ setToken }) => {
       const loginData = await api.login(email, password)
       setToken(loginData.token)
       navigate('/home')
-      console.log('setToken : ', setToken)
+      console.log('token : ', loginData.token)
     } catch (err) {
       console.log(err)
     }

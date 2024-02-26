@@ -62,7 +62,7 @@ const App = () => {
               <Route path="/" element={<Login setToken={updateToken} />} />
               
               <Route path="/users/:userId" element={<ProfilePage />} />
-              <Route path="/profile" element={<Profiles />} />
+              <Route path="/profile" element={<Profiles token={token} />} />
 
               <Route path='*' element={<NotFound />} />
               
