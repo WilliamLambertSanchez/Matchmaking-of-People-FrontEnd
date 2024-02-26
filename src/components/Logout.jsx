@@ -6,8 +6,8 @@ export const Logout = () => {
 
   useEffect(() => {
     window.localStorage.removeItem('token')
-    window.location.reload();
     navigate('/')
+    window.location.reload();
   }, [])
   
 
