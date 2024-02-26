@@ -1,22 +1,21 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
-
-const BASE_URL = import.meta.env.VITE_BASE_URL
+import userApi from "../api/userApi"
 
 export const Profiles = () => {
-  const [users, searchUsers] = useState([])
+  const [users, setUsers] = useState([])
+
+
 
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/users/users`)
-        searchUsers(response.data)
-        console.log('response : ', response.data)
+        const responseUsers = await userApi.getUsers();
+        console.log('responseUsers:', responseUsers);
+        setUsers(responseUsers);
       } catch (error) {
-        console.error('Error fetching users:', error)
+        console.error('Error fetching users:', error);
       }
-    }
-  
+    };
     getUsers();
   }, []);
 
@@ -37,17 +36,17 @@ const formatDate = (dateString) => {
     <>
       <h2>Configure your profile</h2>
         <div>This is the list of users : </div>
-        {users.length > 0 ? (
+        {users && users.length > 0 ? (
           users.map(user => (
             <li key={user._id}>
               <p>{`Username : ${user.username}`}</p>
               <p>{`Rank : ${user.rank}`}</p>
               <p>{`Activities joined : ${user.activitiesJoined}`}</p>
-              <p>{`Outwarder since : ${formatDate(user.createdAt)}`}</p>
+              <p>{`Member since : ${formatDate(user.createdAt)}`}</p>
             </li>
           ))
         ) : (
-      <div>Aucun utilisateur trouvé.</div>
+      <div>Loading ...</div>
       )}
     </>
   )
