@@ -5,7 +5,6 @@ export const Profiles = () => {
   const [users, setUsers] = useState([])
 
 
-
   useEffect(() => {
     const getUsers = async () => {
       try {

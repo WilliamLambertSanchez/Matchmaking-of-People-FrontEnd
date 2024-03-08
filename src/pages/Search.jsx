@@ -1,7 +1,6 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
-
-const BASE_URL = import.meta.env.VITE_BASE_URL
+import activityApi from "../api/activityApi";
+import Header from "../components/Header";
 
 export const Search = () => {
   const [activities, setActivities] = useState([])
@@ -9,14 +8,13 @@ export const Search = () => {
   useEffect(() => {
     const getActivity = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/activities`)
-       setActivities(response.data)
-        console.log('response : ', response.data)
+        const responseActivity = await activityApi.getActivity()
+        console.log('response : ', responseActivity)
+        setActivities(responseActivity)
       } catch (error) {
         console.error('Error fetching activity:', error)
       }
     }
-  
     getActivity();
   }, []);
 
@@ -34,6 +32,7 @@ export const Search = () => {
 
   return (
     <>
+      <Header />
       <h2>Search activities</h2>
 
       <div>This is the list of activities : </div>

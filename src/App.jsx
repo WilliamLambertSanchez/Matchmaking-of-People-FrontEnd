@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import './assets/login.css'
 
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
@@ -39,19 +40,16 @@ const App = () => {
   return (
       <>
         <BrowserRouter>
-          <nav>
-              {token && <Link to="/home">Home</Link>}
+
+              {/* {token && <Link to="/home">Home</Link>}
               {token && <Link to="/create">Create</Link>}
               {token && <Link to="/search">Search</Link>}
               {token && <Link to="/profile">Profile</Link>}
-              {token && <Link to ="/logout">Logout</Link>}
-              {!token && <Link to="/">Login</Link>}
-              {!token && <Link to="/register">Register</Link>}
-          </nav>
-
-            <h1>Linker</h1>
-            <h2>Discover. Connect. Grow.</h2>
-          
+              {token && <Link to ="/logout">Logout</Link>} */}
+              {/* {!token && <Link to="/">Login</Link>}
+              {!token && <Link to="/register">Register</Link>} */}
+              {/* {token && < Linker />}
+              {!token && < Header />} */}
             <Routes>
               
               <Route path="/register" element={<Register />} />
@@ -63,6 +61,8 @@ const App = () => {
               
               <Route path="/users/:userId" element={<ProfilePage />} />
               <Route path="/profile" element={<Profiles token={token} />} />
+
+              {/* <Route path="/activity/:activityId" element={<ActivityPage />} /> */}
 
               <Route path='*' element={<NotFound />} />
               
