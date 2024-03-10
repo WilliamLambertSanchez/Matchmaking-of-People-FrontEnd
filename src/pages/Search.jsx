@@ -1,24 +1,48 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import activityApi from "../api/activityApi";
+import Header from "../components/Header";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL
-
-export const Search = () => {
-  const [activities, setActivities] = useState([])
+export const Search = ({ token }) => {
+  const [activities, setActivities] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getActivity = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/activities`)
-       setActivities(response.data)
-        console.log('response : ', response.data)
+        const responseActivity = await activityApi.getActivities();
+        console.log('response : ', responseActivity);
+        setActivities(responseActivity);
       } catch (error) {
-        console.error('Error fetching activity:', error)
+        console.error('Error fetching activity:', error);
       }
-    }
-  
+    };
     getActivity();
   }, []);
+
+
+
+  const handleJoinActivity = async (activityId) => {
+    
+    try {
+      const response = await activityApi.joinActivity(activityId, token);
+      console.log('response:', response);
+
+      // Update the activities state or perform additional actions
+      setActivities((prevActivities) =>
+        prevActivities.map((activity) =>
+          activity._id === activityId ? { ...activity, participants: response.participants } : activity
+        )
+      );
+
+      // Fix the typo in the route
+      navigate(`/activity/${activityId}`);
+
+      console.log('Joined activity successfully');
+    } catch (error) {
+      console.error('Error joining activity:', error);
+    }
+  };
 
   const formatDate = (dateString) => {
     const options = {
@@ -30,24 +54,30 @@ export const Search = () => {
     const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
     return formattedDate;
   };
-  
 
   return (
     <>
-      <h2>Search activities</h2>
+      <Header />
+      <h2>Search and join activities</h2>
 
-      <div>This is the list of activities : </div>
-      {activities.length > 0 ? (
-        activities.map(activity => (
-          <li key={activity._id}>
-            <p>{`Name of activity : ${activity.name}`}</p>
-            <p>{`Description of activity : ${activity.description}`}</p>
-            <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
-          </li>
-        ))
-      ) : (
-      <div>No activities found.</div>
-      )}     
+      <div>
+        {activities && activities.length > 0 ? (
+          activities.map((activity) => (
+            <div className="box" key={activity._id}>
+              <p>{`Name of activity : ${activity.name}`}</p>
+              <p>{`Description of activity : ${activity.description}`}</p>
+              <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
+              <p>{`Author of activity : ${activity.username}`}</p>
+              <button onClick={() => handleJoinActivity(activity._id)}>Join</button>
+              <Link to={`/activity/${activity._id}`}>
+                <button>View Activity</button>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <div>Loading...</div>
+        )}
+      </div>
     </>
-  )
-}
+  );
+};

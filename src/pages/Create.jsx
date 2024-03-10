@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { CreateActivityForm } from '../components/CreateActivity'
 import activityApi from "../api/activityApi"
+import Header from "../components/Header"
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
@@ -17,9 +18,13 @@ export const Create = ({token}) => {
 
   
   const getActivities = async () => {
-    const responseFromBackend = await fetch(`${BASE_URL}/activities`)
-    const activityResponse = await responseFromBackend.json();
-    setActivities(activityResponse)}
+    try {
+      const responseActivity = await activityApi.getActivities()
+      console.log('response : ', responseActivity)
+      setActivities(responseActivity)
+    } catch (error) {
+      console.error('Error fetching activity:', error)
+    }}
 
   const deleteActivity = async (id) => {
     console.log('this is the id : ', id)
@@ -74,7 +79,7 @@ export const Create = ({token}) => {
     });
   };
 
-// Formating de date
+// Formating the date
   const formatDate = (dateString) => {
     const options = {
       weekday: 'long',
@@ -91,6 +96,7 @@ export const Create = ({token}) => {
 
   return (
     <>
+      <Header />
       <h2>Create and Update your activities</h2>
       <CreateActivityForm
         addActivity={addActivity}
@@ -103,20 +109,24 @@ export const Create = ({token}) => {
         date={date}
         setDate={setDate}
       ></CreateActivityForm>
-      <ul>
-        {activities.map((activity) => (
-          <li key={activity._id}>
-            <p>{`Name of activity : ${activity.name}`}</p>
-            <p>{`Description of activity : ${activity.description}`}</p>
-            <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
-            <p>{`Author of activity : ${activity.username}`}</p>
-            <button onClick={() => deleteActivity(activity._id)}>Delete</button>
-            <button onClick={() => updateMode(activity._id, activity.name, activity.description, activity.date)}>
-              Update
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div>
+        {activities && activities.length > 0 ? (
+          activities.map((activity) => (
+            <div key={activity._id}>
+              <p>{`Name of activity : ${activity.name}`}</p>
+              <p>{`Description of activity : ${activity.description}`}</p>
+              <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
+              <p>{`Author of activity : ${activity.username}`}</p>
+              <button onClick={() => deleteActivity(activity._id)}>Delete</button>
+              <button onClick={() => updateMode(activity._id, activity.name, activity.description, activity.date)}>
+                Update
+              </button>
+            </div>
+          ))
+          ) : (
+          <div>Loading...</div>
+        )}
+      </div>
     </>
   );
 }

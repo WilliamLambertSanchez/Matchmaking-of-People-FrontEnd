@@ -20,6 +20,17 @@ export const CreateActivityForm = ({
     }
   };
 
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+
+   // Format the current date and time for the "min" of "datetime-local" input
+   const formattedNow = `${year}-${month}-${day}T${hours}:${minutes}`;
+
   return (
     <form className="formulario" onSubmit={handleSubmit}>
       <div>
@@ -52,8 +63,8 @@ export const CreateActivityForm = ({
           value={date}
           onChange={(evt) => setDate(evt.target.value)}
           required pattern="\d{4}-\d{2}-\d{2}"
-          min="2024-01-30"
-          max="2024-12-31"
+          min={formattedNow}
+          max="2025-12-31"
           data-date=""
           data-date-format="dd-mm-yyyy-HH:mm"
         />

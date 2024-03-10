@@ -1,0 +1,66 @@
+.loginTypo1 {
+  display: flex;
+  width: 100%;
+  opacity: 0.5;
+  justify-content: center;
+  max-width: 300px;
+}
+
+.loginSlogan {
+  width:100%;
+  min-width: 50%;
+  min-height: 50%;
+}
+
+@font-face {
+  font-family: 'slogan';
+  src: url('./MrDafoe-Regular.ttf') format('truetype');
+}
+
+.textField {
+  color: #E5E0D8;
+}
+
+.form {
+  color: black;
+  width: 100%;
+}
+
+@font-face {
+  font-family: 'logo';
+  src: url('./OneSignature.ttf') format('truetype');
+}
+
+.logoWeb {
+  background-image: url('./favicon.ico');
+}
+
+.MuiSvgIcon-root {
+  color: #725C3A;
+}
+
+.MuiSvgIcon-root:hover {
+  color: white;
+}
+
+.backgroundUsers {
+  background-image: url('./Blur_park.png');
+}
+
+.login {
+  background-image: url('./Blur_park.png');
+  position: fixed;
+  background-size: cover;
+  background-repeat: no repeat;
+  background-position: center;
+  background-attachment: fixed;
+  min-width: 100%;
+  min-height: 100%;
+}
+@media (max-width: 3000px;  min-width: 480px) 
+{
+  .login{
+    background-size: contain;
+  }
+}
+

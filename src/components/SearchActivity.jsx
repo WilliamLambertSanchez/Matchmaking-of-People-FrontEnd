@@ -5,10 +5,6 @@ import { TokenContext } from "../main"
 const BASE_URL = import.meta.env.VITE_BASE_URL
 // import { TokenContextProvider } from "../context/TokenContext"
 
-const VerifyToken = () => {
-  const token = useContext(TokenContext)  
-  return <p>{token}</p>
-}
 
 export const SearchActivity = () => {
   const [activities, setActivities] = useState([])
