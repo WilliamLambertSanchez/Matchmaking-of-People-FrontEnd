@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './assets/login.css'
 
 import { Login } from "./pages/Login";
@@ -8,9 +8,11 @@ import { Home } from "./pages/Home";
 import { Logout } from "./components/Logout"
 import { Create } from "./pages/Create"
 import { Search } from "./pages/Search"
-import { Profiles } from "./pages/Profile";
 import { NotFound } from "./components/NotFound"
-import { ProfilePage } from "./components/ProfilePages"
+import { UserProfile } from "./pages/UserProfile";
+import { Users } from "./components/Users";
+import { ActivityPage } from "./pages/ActivityPage";
+import { UserProfileUsername } from "./pages/UserProfileUsername";
 
 const App = () => {
 
@@ -56,16 +58,18 @@ const App = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/create" element={<Create token={token} />} />
-              <Route path="/search" element={<Search />} />
+              <Route path="/search" element={<Search token={token} />} />
               <Route path="/" element={<Login setToken={updateToken} />} />
               
-              <Route path="/users/:userId" element={<ProfilePage />} />
-              <Route path="/profile" element={<Profiles token={token} />} />
+              <Route path="/users" element={<Users token={token}/>} />
 
-              {/* <Route path="/activity/:activityId" element={<ActivityPage />} /> */}
+                <Route path="/user/:userId" element={<UserProfile />} />
+                <Route path="/u/:username" element={<UserProfileUsername />} />
+
+
+              <Route path="/activity/:activityId" element={<ActivityPage />} />
 
               <Route path='*' element={<NotFound />} />
-              
             </Routes>
         </BrowserRouter>
       </>

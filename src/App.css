@@ -1,7 +1,6 @@
-/* #root {
+#root {
   width: 100%;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   margin: 0;
   display: flex;
@@ -10,6 +9,16 @@
   flex-direction: column;
 }
 
+#box {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+/*
 .logo {
   height: 6em;
   padding: 1.5em;

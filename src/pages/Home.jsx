@@ -9,7 +9,7 @@ export const Home = () => {
   useEffect(() => {
     const getActivity = async () => {
       try {
-        const responseActivity = await activityApi.getActivity()
+        const responseActivity = await activityApi.getActivities()
         console.log('response : ', responseActivity)
         setActivities(responseActivity)
       } catch (error) {
@@ -42,22 +42,22 @@ const formatDate = (dateString) => {
 
     <h3>*Integration of the map here*</h3>
 
-    <ul>
+    <div>
       {activities && activities.length > 0 ? (
         activities.map(activity => (
-          <li key={activity._id}>
+          <div key={activity._id}>
             <p>{`Name of activity : ${activity.name}`}</p>
             <p>{`Description of activity : ${activity.description}`}</p>
             <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
             <p>{`Author of activity : ${activity.username}`}</p>
             <p>{`Participants of activity : ${activity.participants}`}</p>
             <button onClick={() => joinActivity(activity._id)}>Join</button>
-          </li>
+          </div>
         ))
         ) : (
         <div>Loading...</div>
       )}
-    </ul>    
+    </div>    
     </>
   )
 }

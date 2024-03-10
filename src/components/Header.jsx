@@ -15,8 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 
-const pages = ['Home', 'Create', 'Search'];
-const settings = ['Profile', 'Account', 'Logout'];
+const pages = ['Home', 'Create', 'Search', 'Users'];
+const settings = ['Profile', 'Logout'];
 const theme = createTheme({
   palette: {
     primary: {

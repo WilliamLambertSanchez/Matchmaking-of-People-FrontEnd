@@ -43,6 +43,10 @@
   color: white;
 }
 
+.backgroundUsers {
+  background-image: url('./Blur_park.png');
+}
+
 .login {
   background-image: url('./Blur_park.png');
   position: fixed;

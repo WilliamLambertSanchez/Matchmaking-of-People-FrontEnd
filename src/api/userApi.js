@@ -17,13 +17,47 @@ const getUsers = async () => {
 }
 
 
-const getUser = async () => {
-  let { userId } = useParams();
-  await axios.get(`${BASE_URL}/users/${userId}`)
-}
+const getUser = async (userId) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/users/${userId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: window.localStorage.getItem('token')
+        }
+      }
+    );
+    console.log('response:', response.data);
+    return response.data; // Assuming the user data is available in response.data
+  } catch (error) {
+    console.error(`Error fetching user with ID ${userId}:`, error);
+    throw error; // You might want to handle this error in the component
+  }
+};
+
+const getUserByUsername = async (username) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/users/username/${username}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: window.localStorage.getItem('token'),
+        },
+      }
+    );
+    console.log('response:', response.data);
+    return response.data; // Assuming the user data is available in response.data
+  } catch (error) {
+    console.error(`Error fetching user with username ${username}:`, error);
+    throw error; // You might want to handle this error in the component
+  }
+};
 
 
 export default {
   getUsers,
-  getUser
+  getUser,
+  getUserByUsername
 }

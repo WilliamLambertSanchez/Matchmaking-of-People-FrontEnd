@@ -19,7 +19,7 @@ export const Create = ({token}) => {
   
   const getActivities = async () => {
     try {
-      const responseActivity = await activityApi.getActivity()
+      const responseActivity = await activityApi.getActivities()
       console.log('response : ', responseActivity)
       setActivities(responseActivity)
     } catch (error) {
@@ -79,7 +79,7 @@ export const Create = ({token}) => {
     });
   };
 
-// Formating de date
+// Formating the date
   const formatDate = (dateString) => {
     const options = {
       weekday: 'long',
@@ -109,10 +109,10 @@ export const Create = ({token}) => {
         date={date}
         setDate={setDate}
       ></CreateActivityForm>
-      <ul>
+      <div>
         {activities && activities.length > 0 ? (
           activities.map((activity) => (
-            <li key={activity._id}>
+            <div key={activity._id}>
               <p>{`Name of activity : ${activity.name}`}</p>
               <p>{`Description of activity : ${activity.description}`}</p>
               <p>{`Date of activity : ${formatDate(activity.date)}`}</p>
@@ -121,12 +121,12 @@ export const Create = ({token}) => {
               <button onClick={() => updateMode(activity._id, activity.name, activity.description, activity.date)}>
                 Update
               </button>
-            </li>
+            </div>
           ))
           ) : (
           <div>Loading...</div>
         )}
-      </ul>
+      </div>
     </>
   );
 }
