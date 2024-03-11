@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import activityApi from "../api/activityApi";
 import Header from "../components/Header";
 import userApi from "../api/userApi";
+import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
 
 export const ActivityPage = () => {
   const { activityId } = useParams();
@@ -42,7 +43,7 @@ export const ActivityPage = () => {
     return (
       <>
       <Header />
-      <div>Loading...</div>
+      <div>Loading...please Login again</div>
       </>
     )
   }
@@ -64,25 +65,55 @@ export const ActivityPage = () => {
   return (
     <>
       <Header />
-        <h2>Activity Details</h2>
+      <Container maxWidth="lg" style={{marginTop:"20px"}}>
+        <Typography variant='h4' style={{color: 'primary.light',
+              }}>
+          Activity Details
+        </Typography>
         {users.find}
 
-        <p>{`Author of activity : `}
+        <p>{`Author: `}
         <Link to={`/u/${activity.username}`}>
           {activity.username}
         </Link>
-      </p>
+        </p>
         <p>{`Activity Name: ${activity.name}`}</p>
         <p>{`Description: ${activity.description}`}</p>
-        <p>{`Created at: ${formatDate(activity.createdAt)}`}</p>
-        <div className="list">
+        <p>{`Date: ${formatDate(activity.date)}`}</p>
+      
+ 
+        <div>
           {`Participants : `}
-          {users.map((user) => (
-            <Link key={user?._id} to={`/user/${user?._id}`}>
-              {user ? user.username : 'Participants Loading...'}
-            </Link>
-          ))}
+          <Grid container spacing={3} style={{marginTop:"30px"}}>
+            {users && users.length > 0 ? (
+              users.map(user => (
+                <Grid item xs={1} sm={4} md={4} key={user._id}>
+                  <Card sx={{ maxWidth: 345, border:"1px solid #1976d2", padding:"18px", textAlign:'center', borderRadius: '5px' }}>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {user.username}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {formatDate(user.createdAt)}
+                      </Typography>
+                      <Typography variant="h6" color="text.secondary">
+                        {user.rank}
+                      </Typography>
+                    </CardContent>
+                    <CardActions style={{display:"flex", justifyContent:"center", color:'#725C3A'}}>
+                      <Link to={`/user/${user._id}`} style={{ textDecoration: 'none' }}>
+                        <Button size="small" variant="outlined">Learn More</Button>
+                      </Link>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))
+            ) : (
+            <div>Loading...</div>
+            )}
+          </Grid>  
         </div>
+      </Container>
     </>
   );
 };

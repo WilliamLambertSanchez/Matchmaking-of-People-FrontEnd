@@ -43,8 +43,9 @@
   color: white;
 }
 
-.backgroundUsers {
-  background-image: url('./Blur_park.png');
+header {
+  position: fixed;
+  z-index: 1000;
 }
 
 .login {

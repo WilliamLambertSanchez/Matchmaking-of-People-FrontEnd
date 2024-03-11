@@ -4,6 +4,8 @@ import userApi from "../api/userApi";
 import activityApi from "../api/activityApi";
 import Header from "../components/Header";
 
+import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
+
 export const UserProfileUsername = () => {
   const { username } = useParams();
   
@@ -65,18 +67,54 @@ export const UserProfileUsername = () => {
   return (
     <>
       <Header />
-      <h2>User Profile</h2>
-      <p>{`Name : ${user.username}`}</p>
-      <p>{`Rank : ${user.rank}`}</p>
-      <p>{`Member since : ${formatDate(user.createdAt)}`}</p>
-      <div className="list">
-        {`Activities joined : `}
-        {activities.map((activity) => (
-          <Link key={activity?._id} to={`/activity/${activity?._id}`}>
-            {activity ? activity.name : 'Activity Name Loading...'}
-          </Link>
-        ))}
-      </div>
+      <Container maxWidth="lg" style={{marginTop:"20px"}}>
+        <Typography variant='h4' style={{color: 'primary.light',
+              }}>
+          User Profile
+        </Typography>
+        {activities.find}
+
+        <p>{`Name: ${user.username}`}</p>
+        <p>{`Rank: ${user.rank}`}</p>
+        <p>{`Member since: ${formatDate(user.createdAt)}`}</p>
+      
+ 
+        <div>
+          {`Activities joined: `}
+          <Grid container spacing={3} style={{marginTop:"30px"}}>
+            {activities && activities.length > 0 ? (
+              activities.map(activity => (
+                <Grid item xs={1} sm={4} md={4} key={activity._id}>
+                  <Card sx={{ maxWidth: 345, border:"1px solid #1976d2", padding:"18px", textAlign:'center', borderRadius: '5px' }}>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {activity.name}
+                      </Typography>
+                      <Typography variant="body7" color="text.secondary">
+                        {activity.description}
+                      </Typography>
+                      <Typography variant="body2" color="black">
+                        {formatDate(activity.createdAt)}
+                      </Typography>
+                      <Typography variant="h6" color="text.secondary">
+                        {activity.rank}
+                      </Typography>
+                    </CardContent>
+                    <CardActions style={{display:"flex", justifyContent:"center", color:'#725C3A'}}>
+                      <Link key={activity?._id} to={`/activity/${activity?._id}`} style={{ textDecoration: 'none' }}>
+                        <Button size="small" variant="outlined">Learn More</Button>
+                      </Link>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))
+            ) : (
+            <div>Loading...</div>
+            )}
+          </Grid>  
+        </div>
+      </Container>
+
     </>
   );
 };

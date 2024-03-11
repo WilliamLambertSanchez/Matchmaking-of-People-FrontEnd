@@ -13,6 +13,8 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { createTheme, ThemeProvider } from '@mui/material';
 import { Link } from 'react-router-dom';
+import userApi from '../api/userApi';
+import { useEffect } from 'react';
 
 
 const pages = ['Home', 'Create', 'Search', 'Users'];
@@ -37,6 +39,7 @@ const theme = createTheme({
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user, setUser] = React.useState([])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -52,6 +55,20 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const responseUser = await userApi.getUserHeader()
+        setUser(responseUser);
+        console.log('responseUser:', responseUser);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }}
+      getUser()
+  },[])
+
 
   return (
   <ThemeProvider theme={theme}>
@@ -156,21 +173,40 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting}  onClick={handleCloseUserMenu}>
-                  <Link to={`/${setting.toLowerCase()}`} style={{ textDecoration: 'none' }}>
-                  <Typography textAlign="center"
-                    sx={{
-                      color: 'secondary.light',
-                      '&:hover': {
-                        color: 'secondary.dark',
-                      },
-                    }}
-                    >{setting}</Typography>
-                  </Link>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    {setting === 'Profile' ? (
+                      <Link to={`/u/${user}`} style={{ textDecoration: 'none' }}>
+                        <Typography
+                          textAlign="center"
+                          sx={{
+                            color: 'secondary.light',
+                            '&:hover': {
+                              color: 'secondary.dark',
+                            },
+                          }}
+                        >
+                          {setting}
+                        </Typography>
+                      </Link>
+                    ) : (
+                      <Link to={`/${setting.toLowerCase()}`} style={{ textDecoration: 'none' }}>
+                        <Typography
+                          textAlign="center"
+                          sx={{
+                            color: 'secondary.light',
+                            '&:hover': {
+                              color: 'secondary.dark',
+                            },
+                          }}
+                        >
+                          {setting}
+                        </Typography>
+                      </Link>
+                    )}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
         </Toolbar>
       </Container>
     </AppBar>

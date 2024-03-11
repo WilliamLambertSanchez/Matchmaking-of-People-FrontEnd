@@ -16,6 +16,19 @@ const getUsers = async () => {
   return responseUsers.data
 }
 
+const getUserHeader = async () => {
+  const responseUsers = await axios.get(
+    `${BASE_URL}/users/get/getUserHeader`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: window.localStorage.getItem('token')
+      }
+    }
+  )
+  return responseUsers.data
+}
+
 
 const getUser = async (userId) => {
   try {
@@ -55,9 +68,9 @@ const getUserByUsername = async (username) => {
   }
 };
 
-
 export default {
   getUsers,
+  getUserHeader,
   getUser,
   getUserByUsername
 }
